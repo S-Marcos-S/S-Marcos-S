@@ -144,15 +144,52 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
         }
     }'''
     variables = {'repo_name': repo_name, 'owner': owner, 'cursor': cursor}
-    request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables':variables}, headers=HEADERS) # I cannot use simple_request(), because I want to save the file before raising Exception
-    if request.status_code == 200:
-        if request.json()['data']['repository']['defaultBranchRef'] != None: # Only count commits if repo isn't empty
-            return loc_counter_one_repo(owner, repo_name, data, cache_comment, request.json()['data']['repository']['defaultBranchRef']['target']['history'], addition_total, deletion_total, my_commits)
-        else: return 0
-    force_close_file(data, cache_comment) # saves what is currently in the file before this program crashes
-    if request.status_code == 403:
-        raise Exception('Too many requests in a short amount of time!\nYou\'ve hit the non-documented anti-abuse limit!')
-    raise Exception('recursive_loc() has failed with a', request.status_code, request.text, QUERY_COUNT)
+    
+    # Retry logic for 502 Bad Gateway
+    max_retries = 3
+    retry_delay = 5
+    
+    for attempt in range(max_retries):
+        try:
+            request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables':variables}, headers=HEADERS)
+            if request.status_code == 200:
+                if request.json().get('errors'):
+                     # Handle GraphQL errors that return 200 OK
+                     print(f"GraphQL Error on attempt {attempt+1}: {request.json()['errors']}")
+                     if attempt < max_retries - 1:
+                        time.sleep(retry_delay * (attempt + 1))
+                        continue
+                     else:
+                        raise Exception("GraphQL Error", request.json()['errors'])
+                
+                if request.json()['data']['repository'] is None: # Handle case where repo might not be accessible or deleted
+                    return 0, 0, 0
+
+                if request.json()['data']['repository']['defaultBranchRef'] != None: # Only count commits if repo isn't empty
+                    return loc_counter_one_repo(owner, repo_name, data, cache_comment, request.json()['data']['repository']['defaultBranchRef']['target']['history'], addition_total, deletion_total, my_commits)
+                else: return 0
+            
+            if request.status_code == 502:
+                print(f"Received 502 Bad Gateway. Retrying in {retry_delay} seconds... (Attempt {attempt+1}/{max_retries})")
+                time.sleep(retry_delay)
+                retry_delay *= 2 # Exponential backoff
+                continue
+                
+            if request.status_code == 403:
+                raise Exception('Too many requests in a short amount of time!\nYou\'ve hit the non-documented anti-abuse limit!')
+                
+            # If not 200, 502, or 403, raise generic exception
+            raise Exception('recursive_loc() has failed with a', request.status_code, request.text, QUERY_COUNT)
+            
+        except Exception as e:
+             if attempt < max_retries - 1 and "502" in str(e): # minimal check, mostly for the request failure above
+                 continue
+             if attempt == max_retries - 1:
+                 force_close_file(data, cache_comment)
+                 raise e
+
+    force_close_file(data, cache_comment)
+    raise Exception('recursive_loc() failed after max retries')
 
 
 def loc_counter_one_repo(owner, repo_name, data, cache_comment, history, addition_total, deletion_total, my_commits):
@@ -174,7 +211,7 @@ def loc_counter_one_repo(owner, repo_name, data, cache_comment, history, additio
 def loc_query(owner_affiliation, comment_size=0, force_cache=False, cursor=None, edges=[]):
     """
     Uses GitHub's GraphQL v4 API to query all the repositories I have access to (with respect to owner_affiliation)
-    Queries 60 repos at a time, because larger queries give a 502 timeout error and smaller queries send too many
+    Queries 50 repos at a time (reduced from 60), because larger queries give a 502 timeout error and smaller queries send too many
     requests and also give a 502 error.
     Returns the total number of lines of code in all repositories
     """
@@ -182,7 +219,7 @@ def loc_query(owner_affiliation, comment_size=0, force_cache=False, cursor=None,
     query = '''
     query ($owner_affiliation: [RepositoryAffiliation], $login: String!, $cursor: String) {
         user(login: $login) {
-            repositories(first: 60, after: $cursor, ownerAffiliations: $owner_affiliation) {
+            repositories(first: 50, after: $cursor, ownerAffiliations: $owner_affiliation) {
             edges {
                 node {
                     ... on Repository {
@@ -207,12 +244,42 @@ def loc_query(owner_affiliation, comment_size=0, force_cache=False, cursor=None,
         }
     }'''
     variables = {'owner_affiliation': owner_affiliation, 'login': USER_NAME, 'cursor': cursor}
-    request = simple_request(loc_query.__name__, query, variables)
-    if request.json()['data']['user']['repositories']['pageInfo']['hasNextPage']:   # If repository data has another page
-        edges += request.json()['data']['user']['repositories']['edges']            # Add on to the LoC count
-        return loc_query(owner_affiliation, comment_size, force_cache, request.json()['data']['user']['repositories']['pageInfo']['endCursor'], edges)
-    else:
-        return cache_builder(edges + request.json()['data']['user']['repositories']['edges'], comment_size, force_cache)
+    
+    max_retries = 3
+    retry_delay = 5
+    
+    for attempt in range(max_retries):
+        try:
+            request = simple_request(loc_query.__name__, query, variables)
+            # simple_request handles non-200 by raising Exception, but we need to catch 502 specifically
+            # Wait, simple_request logic is a bit simple. Let's rewrite simple_request calls here or modify simple_request? 
+            # Modifying simple_request is cleaner but loc_query has specific recursion logic.
+            # Let's wrap the call.
+            
+            if request.json().get('errors'):
+                 print(f"GraphQL Error on attempt {attempt+1}: {request.json()['errors']}")
+                 if attempt < max_retries - 1:
+                     time.sleep(retry_delay * (attempt+1))
+                     continue
+                 else:
+                     raise Exception("GraphQL Error", request.json()['errors'])
+
+            if request.json()['data']['user']['repositories']['pageInfo']['hasNextPage']:
+                edges += request.json()['data']['user']['repositories']['edges']
+                return loc_query(owner_affiliation, comment_size, force_cache, request.json()['data']['user']['repositories']['pageInfo']['endCursor'], edges)
+            else:
+                return cache_builder(edges + request.json()['data']['user']['repositories']['edges'], comment_size, force_cache)
+        
+        except Exception as e:
+            # Check if it is the custom exception from simple_request containing status code
+            if len(e.args) > 2 and e.args[2] == 502:
+                 print(f"Received 502 Bad Gateway in loc_query. Retrying in {retry_delay} seconds... (Attempt {attempt+1}/{max_retries})")
+                 time.sleep(retry_delay)
+                 retry_delay *= 2
+                 continue
+            if attempt == max_retries - 1:
+                raise e
+    raise Exception('loc_query() failed after max retries')
 
 
 def cache_builder(edges, comment_size, force_cache, loc_add=0, loc_del=0):
