@@ -528,7 +528,7 @@ if __name__ == '__main__':
     commit_data, commit_time = perf_counter(commit_counter, 7)
     star_data, star_time = perf_counter(graph_repos_stars, 'stars', ['OWNER'])
     repo_data, repo_time = perf_counter(graph_repos_stars, 'repos', ['OWNER'])
-    contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'])
+    contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER'])
     follower_data, follower_time = perf_counter(follower_getter, USER_NAME)
 
     for index in range(len(total_loc)-1): total_loc[index] = '{:,}'.format(total_loc[index]) # format added, deleted, and total LOC
