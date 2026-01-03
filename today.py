@@ -224,6 +224,7 @@ def loc_query(owner_affiliation, comment_size=0, force_cache=False, cursor=None,
                 node {
                     ... on Repository {
                         nameWithOwner
+                        isFork
                         defaultBranchRef {
                             target {
                                 ... on Commit {
@@ -251,24 +252,29 @@ def loc_query(owner_affiliation, comment_size=0, force_cache=False, cursor=None,
     for attempt in range(max_retries):
         try:
             request = simple_request(loc_query.__name__, query, variables)
-            # simple_request handles non-200 by raising Exception, but we need to catch 502 specifically
-            # Wait, simple_request logic is a bit simple. Let's rewrite simple_request calls here or modify simple_request? 
-            # Modifying simple_request is cleaner but loc_query has specific recursion logic.
-            # Let's wrap the call.
             
-            if request.json().get('errors'):
-                 print(f"GraphQL Error on attempt {attempt+1}: {request.json()['errors']}")
+            res_data = request.json()
+            if res_data.get('errors'):
+                 print(f"GraphQL Error on attempt {attempt+1}: {res_data['errors']}")
                  if attempt < max_retries - 1:
                      time.sleep(retry_delay * (attempt+1))
                      continue
                  else:
-                     raise Exception("GraphQL Error", request.json()['errors'])
+                     raise Exception("GraphQL Error", res_data['errors'])
 
-            if request.json()['data']['user']['repositories']['pageInfo']['hasNextPage']:
-                edges += request.json()['data']['user']['repositories']['edges']
-                return loc_query(owner_affiliation, comment_size, force_cache, request.json()['data']['user']['repositories']['pageInfo']['endCursor'], edges)
+            current_edges = res_data['data']['user']['repositories']['edges']
+            for edge in current_edges:
+                repo_name = edge['node']['nameWithOwner']
+                if edge['node']['isFork']:
+                    print(f"   Skipping fork: {repo_name}")
+                else:
+                    print(f"   Processing repo: {repo_name}")
+
+            if res_data['data']['user']['repositories']['pageInfo']['hasNextPage']:
+                edges += current_edges
+                return loc_query(owner_affiliation, comment_size, force_cache, res_data['data']['user']['repositories']['pageInfo']['endCursor'], edges)
             else:
-                return cache_builder(edges + request.json()['data']['user']['repositories']['edges'], comment_size, force_cache)
+                return cache_builder(edges + current_edges, comment_size, force_cache)
         
         except Exception as e:
             # Check if it is the custom exception from simple_request containing status code
@@ -308,6 +314,8 @@ def cache_builder(edges, comment_size, force_cache, loc_add=0, loc_del=0):
     cache_comment = data[:comment_size] # save the comment block
     data = data[comment_size:] # remove those lines
     for index in range(len(edges)):
+        if edges[index]['node']['isFork']:
+            continue
         repo_hash, commit_count, *__ = data[index].split()
         if repo_hash == hashlib.sha256(edges[index]['node']['nameWithOwner'].encode('utf-8')).hexdigest():
             try:
@@ -515,7 +523,7 @@ if __name__ == '__main__':
     formatter('account data', user_time)
     age_data, age_time = perf_counter(daily_readme, datetime.datetime(2005, 2, 14))
     formatter('age calculation', age_time)
-    total_loc, loc_time = perf_counter(loc_query, ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'], 7)
+    total_loc, loc_time = perf_counter(loc_query, ['OWNER'], 7)
     formatter('LOC (cached)', loc_time) if total_loc[-1] else formatter('LOC (no cache)', loc_time)
     commit_data, commit_time = perf_counter(commit_counter, 7)
     star_data, star_time = perf_counter(graph_repos_stars, 'stars', ['OWNER'])
