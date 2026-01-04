@@ -1,6 +1,6 @@
 <!-- Typing Banner -->
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=26&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=S-Marcos-S;AOSP+%7C+Custom+ROM+Developer;Garnet+Device+Maintainer;Axion+OS+Maintainer;Open+Source+Contributor" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=26&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=S-Marcos-S;Android+Developer+%7C+AOSP+maintainer" />
 </p>
 
 <!-- Profile Views Counter -->
