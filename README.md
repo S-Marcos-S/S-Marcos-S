@@ -1,6 +1,9 @@
 <div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=S-Marcos-S&show_icons=true&theme=dracula&include_all_commits=true&count_private=true" height="180em" alt="S-Marcos-S's GitHub Stats"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=S-Marcos-S&layout=compact&theme=dracula" height="180em" alt="S-Marcos-S's Top Languages"/>
+  <a href="https://github.com/S-Marcos-S/S-Marcos-S">
+    <img src="https://komarev.com/ghpvc/?username=S-Marcos-S&style=for-the-badge&color=blueviolet" alt="Profile views"/>
+  </a>
+  <br><br>
+  <img src="https://github-profile-trophy.vercel.app/?username=S-Marcos-S&theme=dracula&column=6&row=1&margin-w=10" alt="GitHub trophies"/>
 </div>
 
 <br/>
