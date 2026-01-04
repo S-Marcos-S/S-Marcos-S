@@ -9,7 +9,6 @@
 </p>
 
 <!-- Main Heading -->
-<h1 align="center">S-Marcos-S</h1>
 <h3 align="center">AOSP & Custom ROM Developer | Garnet Device Maintainer</h3>
 
 <hr>
