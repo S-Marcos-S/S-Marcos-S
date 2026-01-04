@@ -29,12 +29,6 @@
 
 <h2 align="center">GitHub Analytics</h2>
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=S-Marcos-S&show_icons=true&theme=tokyonight&hide_border=true" />
-</p>
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com?user=S-Marcos-S&theme=tokyonight" />
-</p>
-<p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=S-Marcos-S&theme=react-dark&hide_border=true&area=true" />
 </p>
 
