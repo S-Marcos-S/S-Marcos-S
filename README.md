@@ -15,8 +15,7 @@
 
 <!-- About Section -->
 <p align="center">
-  I am an Android Open Source Project (AOSP) developer and official maintainer for Axion OS on the Garnet platform.  
-  My work focuses on stability, performance optimization, feature integration, and delivering reliable builds for the community.
+  I am an Android developer and maintainer for Axion OS on the Garnet platform.  
 </p>
 
 ---
