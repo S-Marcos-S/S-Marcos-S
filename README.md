@@ -22,7 +22,9 @@
 
 <h2 align="center">Connect With Me</h2>
 <p align="center">
-  <!-- Adicione seus links corretos aqui futuramente -->
+  <a href="https://www.linkedin.com/in/marcos-silqueira-4581482a5">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
 </p>
 
 ---
