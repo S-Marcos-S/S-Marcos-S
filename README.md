@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=S-Marcos-S&theme=dracula&column=6&row=1&margin-w=10" alt="GitHub trophies"/>
+  <img src="https://img.shields.io/github/stars/S-Marcos-S?style=for-the-badge&logo=star&color=f1fa8c&labelColor=282a36" alt="Stars"/>
+  <img src="https://img.shields.io/github/followers/S-Marcos-S?style=for-the-badge&logo=github&color=bd93f9&labelColor=282a36" alt="Followers"/>
+  <img src="https://img.shields.io/github/public-repos/S-Marcos-S?style=for-the-badge&logo=github&color=ff79c6&labelColor=282a36" alt="Repositories"/>
 </div>
 
 <br/>
