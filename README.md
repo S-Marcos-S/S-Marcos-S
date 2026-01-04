@@ -1,10 +1,3 @@
-<a href="https://github.com/S-Marcos-S/S-Marcos-S">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/S-Marcos-S/S-Marcos-S/main/dark_mode.svg">
-    <img alt="S-Marcos-S's GitHub Profile README" src="https://raw.githubusercontent.com/S-Marcos-S/S-Marcos-S/main/light_mode.svg">
-  </picture>
-</a>
-
 <!-- Typing Banner -->
 <p align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=26&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=S-Marcos-S;AOSP+%7C+Custom+ROM+Developer;Garnet+Device+Maintainer;Axion+OS+Maintainer;Open+Source+Contributor" />
@@ -54,3 +47,10 @@
 <p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=S-Marcos-S&theme=react-dark&hide_border=true&area=true" />
 </p>
+
+<a href="https://github.com/S-Marcos-S/S-Marcos-S">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/S-Marcos-S/S-Marcos-S/main/dark_mode.svg">
+    <img alt="S-Marcos-S's GitHub Profile README" src="https://raw.githubusercontent.com/S-Marcos-S/S-Marcos-S/main/light_mode.svg">
+  </picture>
+</a>
