@@ -4,3 +4,53 @@
     <img alt="S-Marcos-S's GitHub Profile README" src="https://raw.githubusercontent.com/S-Marcos-S/S-Marcos-S/main/light_mode.svg">
   </picture>
 </a>
+
+<!-- Typing Banner -->
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=26&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=S-Marcos-S;AOSP+%7C+Custom+ROM+Developer;Garnet+Device+Maintainer;Axion+OS+Maintainer;Open+Source+Contributor" />
+</p>
+
+<!-- Profile Views Counter -->
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=S-Marcos-S&label=Profile%20Views&color=0078ff&style=for-the-badge" alt="Profile Views" />
+</p>
+
+<!-- Main Heading -->
+<h1 align="center">S-Marcos-S</h1>
+<h3 align="center">AOSP & Custom ROM Developer | Garnet Device Maintainer</h3>
+
+<hr>
+
+<!-- About Section -->
+<p align="center">
+  I am an Android Open Source Project (AOSP) developer and official maintainer for Axion OS on the Garnet platform.  
+  My work focuses on stability, performance optimization, feature integration, and delivering reliable builds for the community.
+</p>
+
+---
+
+<h2 align="center">Connect With Me</h2>
+<p align="center">
+  <a href="https://t.me/Mayurbuilds">
+    <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" />
+  </a>
+  <a href="https://twitter.com/Mayur72869557">
+    <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" />
+  </a>
+  <a href="https://linktr.ee/Mayur_U">
+    <img src="https://img.shields.io/badge/Linktree-39E09B?style=for-the-badge&logo=linktree&logoColor=white" />
+  </a>
+</p>
+
+---
+
+<h2 align="center">GitHub Analytics</h2>
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=S-Marcos-S&show_icons=true&theme=tokyonight&hide_border=true" />
+</p>
+<p align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com?user=S-Marcos-S&theme=tokyonight" />
+</p>
+<p align="center">
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=S-Marcos-S&theme=react-dark&hide_border=true&area=true" />
+</p>
