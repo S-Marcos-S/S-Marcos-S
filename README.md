@@ -15,7 +15,7 @@
 
 <!-- About Section -->
 <p align="center">
-  I am an Android developer and maintainer for Axion OS on the Garnet platform.  
+  I am an Android developer and unofficial maintainer for Axion OS on the Garnet platform.  
 </p>
 
 ---
