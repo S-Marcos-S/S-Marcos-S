@@ -1,6 +1,6 @@
 <!-- Typing Banner -->
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=26&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=S-Marcos-S;Software+Engineering+Student+%7C+Android+Developer" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=26&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=S-Marcos-S;Soft.+Eng.+Student+%7C+Android+Developer" />
 </p>
 
 <!-- Profile Views Counter -->
@@ -9,7 +9,7 @@
 </p>
 
 <!-- Main Heading -->
-<h3 align="center">Soft. Eng. Student | Android Developer</h3>
+<h3 align="center">Software Engineering Student | Android Developer</h3>
 
 <hr>
 
