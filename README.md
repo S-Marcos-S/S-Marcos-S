@@ -7,10 +7,6 @@
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=S-Marcos-S&label=Profile%20Views&color=0078ff&style=for-the-badge" alt="Profile Views" />
 </p>
-
-<!-- Main Heading -->
-<h3 align="center">Software Engineering Student | Android Developer</h3>
-
 <hr>
 
 <!-- About Section -->
