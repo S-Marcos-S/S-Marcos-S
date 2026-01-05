@@ -9,7 +9,7 @@
 </p>
 
 <!-- Main Heading -->
-<h3 align="center">Software Engineering Student | Android Developer</h3>
+<h3 align="center">Soft. Eng. Student | Android Developer</h3>
 
 <hr>
 
