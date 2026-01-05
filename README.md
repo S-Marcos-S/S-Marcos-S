@@ -15,7 +15,7 @@
 
 <!-- About Section -->
 <p align="center">
-  I am a Software Engineering student and an Android developer.
+  I am a Software Engineering student and a programmer currently focusing on Android app development.
 </p>
 
 ---
